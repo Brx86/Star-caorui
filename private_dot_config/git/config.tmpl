@@ -6,5 +6,7 @@
 	gpgsign = true
 [init]
 	defaultBranch = main
+{{- if eq .chezmoi.hostname "iNetech-PC" }}
 [credential]
 	helper = /usr/lib/git-core/git-credential-libsecret
+{{- end }}
