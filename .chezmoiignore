@@ -1,2 +1,6 @@
 README.md
 LICENSE
+{{- if ne .chezmoi.hostname "iNetech-PC" }}
+~/.config/environment.d/DE.conf
+~/.config/environment.d/INPUT_METHOD.conf
+{{- end }}
