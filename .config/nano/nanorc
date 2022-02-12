@@ -1,9 +1,0 @@
-set autoindent
-set indicator
-set linenumbers
-set smarthome
-set tabsize 2
-set tabstospaces
-include "/usr/share/nano/*.nanorc"
-extendsyntax python tabgives "    "
-extendsyntax makefile tabgives "      "
