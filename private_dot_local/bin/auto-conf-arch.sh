@@ -6,21 +6,17 @@
 # HACK: Maybe you need install ucode, firmware, graphics driver.
 
 # 偏好设置：
-# _USER_NAME=      # 如果启用将会创建特权用户（如果用户名不合规，则不会继续创建用户）
-# _USER_PASSWORD=  # 如果启用将会给特权用户创建账户密码.（如果用户名不存在，则不会继续创建密码）
 # _ROOT_PASSWORD=  # 如果启用将会给 root 用户创建账户密码
 # _PASSWORD_LOGIN= # 如果值是 ENABLE 则允许密码登入，如果值是 DISABLE 则不允许密码登入。
-# _SSH_PUBKEY=     # 如果被启用则会允许通过此密钥登入特权用户和 root 用户。
 
+_PASSWORD_LOGIN=DISABLE
+# _ROOT_PASSWORD=
 _TIMEZONE=Asia/Shanghai
 _LANG=zh_CN.UTF-8
 _SHELL=zsh
 _EDITOR=nano
-#_HOSTNAME=Netech
+#_HOSTNAME=iNetech XXX
 #_DNS_OVER_HTTPS='https://i.passcloud.xyz/dns-query'
-
-_PASSWORD_LOGIN=DISABLE
-_SSH_PUBKEY='ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQDCv96Mn19WYF6klxlagKycBkJLRzscs1Ho4WnQltNLDJQJR1PjxFOX3W2UBB6wvsavUe+0HWPFeOCvHajwvYlqPBdsfuA+HPk/x+tTXtBTAS5we4eCm67wYc61T+EnQmY4/Ml10FbXfQ0lfh54Ovug6TZxaJ4cCK5lBwjEj0QzRzwOX5O0py2o9BJvZiAB3RkwZwysdH0t3GO134D+NJ6uoDWXpKr6qyjb2XYGMTTIbdJIEtcyAhLFiPF11T7Rn8cw/jrpIxb5Bg9SLRDAKXTTxbPMHocNnwQL6Fjp5wtDSIai7s7H9la5Lq16M6tWGW/gzOw2GCc2YmWgbStLJ7XAF29QRRpvIy6wH5wLVu73JcQDdJtJ3aivhiS4CiwbWnS1Mpr2BicWvgBoYafJRpitC7yfAEthi1PMY5vFNou9lQyDKtnBRu+PGym5p4Cn4eD4N7J0IiipzhD3u3IL+kbt9NZQVoLsN/2CoU9vKm717QHfimXLckAmM9Gt9YNOiJ0= star@ArchLinux'
 
 if(`curl -s "https://api.ip.sb/geoip" | grep -oP '(?<=country_code":")\w+'` = 'CN') {
   _DISABLE_CLOUDFALRE_FOR_CN='#'
@@ -37,26 +33,12 @@ function auto_conf_locale() {
     sed -i "s/#${_LANG} UTF-8/${_LANG} UTF-8/" /etc/locale.gen
   fi
   echo "LANG=${_LANG}" > /etc/locale.conf
+  locale-gen
 }
 
 function auto_conf_env() {
-  cat 'ENVIRONMENTD="$HOME/.config/environment.d"\
-set -a\
-if [ -d "\${ENVIRONMENTD}" ]; then\
-  for conf in $(ls "${ENVIRONMENTD}"/*.conf)\
-  do\
-    . "${conf}"\
-  done\
-fi\
-set +a' > /etc/profile.d/environment.sh
-
-  if [[ ! -d ${HOME}/.local/state/${_SHELL}/history ]]; then
-    mkdir -p ${HOME}/.local/state/${_SHELL}/
-  fi
-
-  if [[ ! -d ${HOME}/.config/chezmoi/chezmoi.toml ]]; then
-    mkdir -p ${HOME}/.config/chezmoi/
-  fi
+  mkdir -p ${HOME}/.local/state
+  mkdir -p ${HOME}/.config/chezmoi
 
   cat > ${HOME}/.config/chezmoi/chezmoi.toml <<-EOF
     [git]
@@ -68,8 +50,13 @@ set +a' > /etc/profile.d/environment.sh
     email = "star_caorui@hotmail.com"
 	EOF
 
-  pacman --noconfirm -S chezmoi
+  echo 'http ALL=(ALL) NOPASSWD: ALL' >> /etc/sudoers
+
+  pacman --noconfirm -S chezmoi sudo zsh zsh-autosuggestions zsh-completions zsh-syntax-highlighting
+  # TODO: Install paru.
+  sudo -u http paru --noconfirm -S zinit-git oh-my-zsh-git
   chezmoi init --apply https://github.com/Star-caorui/Star-caorui/
+  chsh -s /bin/zsh
   # Prevent the unavailability of environment variables caused by not restarting the terminal
   export GNUPGHOME=${HOME}/.local/share/gnupg
   if [[ -d ${HOME}/.gnupg ]]; then
@@ -147,7 +134,7 @@ function auto_conf_iptable() {
 
 function auto_conf_pacman() {
     cat > /etc/pacman.d/mirrorlist <<-EOF
-      `_DISABLE_CLOUDFALRE_FOR_CN`Server = https://cloudflaremirrors.com/archlinux/\$repo/os/\$arch
+      Server = https://cloudflaremirrors.com/archlinux/\$repo/os/\$arch
       Server = https://mirrors.bfsu.edu.cn/archlinux/\$repo/os/\$arch
       Server = https://mirrors.neusoft.edu.cn/archlinux/\$repo/os/\$arch
       Server = https://mirrors.tuna.tsinghua.edu.cn/archlinux/\$repo/os/\$arch
@@ -226,27 +213,7 @@ function auto_conf_sshd() {
   systemctl enable sshd
 }
 
-function auto_conf_shell() {
-  ${AURHELPER} --noconfirm -S zsh zinit-git oh-my-zsh-git zsh-autosuggestions zsh-completions zsh-syntax-highlighting
-  ln -sf /usr/share/zsh/plugins/zsh-autosuggestions/ /usr/share/oh-my-zsh/plugins/
-  ln -sf /usr/share/zsh/plugins/zsh-syntax-highlighting/ /usr/share/oh-my-zsh/plugins/
-  cat > ${HOME}/.zshrc <<-EOF
-    # Setting zsh cache.
-    ZSH_CACHE_DIR=\${HOME}/.cache/zsh
-    if [[ ! -d \${ZSH_CACHE_DIR} ]]; then
-      mkdir \${ZSH_CACHE_DIR}
-    fi
-    # Setting zsh comdump.
-    ZSH_COMPDUMP=\${XDG_CACHE_HOME}/zsh/zcompdump-\${SHORT_HOST}-\${ZSH_VERSION
-    # Setting zsh config.
-    ZSH="/usr/share/oh-my-zsh/"
-    ZSH_THEME="gnzh"
-    plugins=(sudo zsh-syntax-highlighting zsh-autosuggestions vscode)
-    DISABLE_AUTO_UPDATE="true"
-    source \${ZSH}/oh-my-zsh.sh
-	EOF
-  chsh -s /bin/zsh
-}
+
 
 function auto_conf_utility_software() {
   pacman --noconfirm -S htop git gpg ${_EDITOR}

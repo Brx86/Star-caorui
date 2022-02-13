@@ -37,7 +37,9 @@ if [[ ${DEVICE_TYPE} == 'Desktop' ]]; then
                       --bind  ${HOME}/.local ${HOME}/.local'
 fi
 if [[ ${DEVICE_TYPE} == 'Server' ]]; then
+  alias paru='sudo -u http paru'
   alias gpg='gpg --no-autostart'
+  gpg -K &> /dev/null
 fi
 alias besttrace='besttrace -q 1'
 alias la='ls -lA'
@@ -45,4 +47,4 @@ alias lshmjk='ls -lA ${HOME} -I Desktop -I Downloads -I Documents -I Pictures -I
 alias yarn='yarn --use-yarnrc "$XDG_CONFIG_HOME/yarn/config"'
 
 # Init gpg...
-gpg -K &> /dev/null
+
