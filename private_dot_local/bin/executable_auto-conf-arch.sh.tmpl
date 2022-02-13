@@ -24,7 +24,7 @@ _DNS_SERVER_M=8.8.8.8
 _DNS_SERVER_B=8.8.4.4
 _DNS_OVER_HTTPS='https://i.passcloud.xyz/dns-query'
 
-#_USER_NAME={{ .chezmoi.group }}
+#_USER_NAME={{ .chezmoi.username }}
 #_USER_PASSWORD=password
 #_ROOT_PASSWORD=password
 _PASSWORD_LOGIN=DISABLE
@@ -424,7 +424,6 @@ function auto_install_{{ .chezmoi.osRelease.id }}_p1() {
   local rootfs_path base_url rootfs_url sha256sums_url
 
   rootfs_path=/tmp/{{ .chezmoi.osRelease.id }}-rootfs
-  base_url=https://mirrors.bfsu.edu.cn/lxc-images/images/archlinux/current/{{ .chezmoi.{{ .chezmoi.osRelease.id }} }}/default/
 
   if [[ ! -d ${rootfs_path} ]]; then
     mkdir -p ${rootfs_path}
