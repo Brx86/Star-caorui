@@ -1,15 +1,11 @@
-# 隐藏仓库基本信息
 LICENSE
 README.md
 
-# 在「桌面」上隐藏「服务器」配置文件
 {{- if eq .chezmoi.hostname "iNetech-PC" }}
   .config/environment.d/server.conf
 {{- end }}
 
-# 在「服务器」上隐藏「桌面」配置文件
-{{- if ne .chezmoi.hostname "iNetech-PC" }}
+{{- if eq .chezmoi.hostname "iNetech-BJ" "iNetech-HK" }}
   .config/environment.d/desktop.conf
-  .config/environment.d/de.conf
   .config/environment.d/input_medhod.conf
 {{- end }}
