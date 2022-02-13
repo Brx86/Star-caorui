@@ -1,12 +1,15 @@
-README.md
+# 隐藏仓库基本信息
 LICENSE
+README.md
 
-{{- if ne .chezmoi.hostname "iNetech-PC" }}
-  private_dot_config/environment.d/desktop.conf
-  private_dot_config/environment.d/de.conf
-  private_dot_config/environment.d/input_medhod.conf
+# 在「桌面」上隐藏「服务器」配置文件
+{{- if eq .chezmoi.hostname "iNetech-PC" }}
+  .config/environment.d/server.conf
 {{- end }}
 
-{{- if eq .chezmoi.hostname "iNetech-PC" }}
-  private_dot_config/environment.d/server.conf
+# 在「服务器」上隐藏「桌面」配置文件
+{{- if ne .chezmoi.hostname "iNetech-PC" }}
+  .config/environment.d/desktop.conf
+  .config/environment.d/de.conf
+  .config/environment.d/input_medhod.conf
 {{- end }}
