@@ -6,6 +6,7 @@ README.md
 {{- end }}
 
 {{- if eq .chezmoi.hostname "iNetech-BJ" "iNetech-HK" }}
+  .config/environment.d/key.conf
   .config/environment.d/desktop.conf
   .config/environment.d/input_medhod.conf
 {{- end }}
