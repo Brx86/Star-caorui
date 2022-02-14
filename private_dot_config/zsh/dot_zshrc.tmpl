@@ -16,10 +16,11 @@ if [[ ${DEVICE_TYPE} == 'Server' ]]; then
 fi
 zi snippet /usr/share/oh-my-zsh/lib/history.zsh
 zi snippet /usr/share/oh-my-zsh/lib/key-bindings.zsh
-zi load /usr/share/zsh/plugins/zsh-autosuggestions
 zi ice lucid wait='0'
 zi load /usr/share/zsh/plugins/zsh-syntax-highlighting
-zi ice lucid wait='0' atload="zicompinit; zicdreplay"
+zi ice lucid wait='0'
+zi load /usr/share/zsh/plugins/zsh-autosuggestions
+zi ice lucid wait='0'
 zi load /usr/share/oh-my-zsh/plugins/sudo
 
 # Configuring Alias...
@@ -45,6 +46,3 @@ alias besttrace='besttrace -q 1'
 alias la='ls -lA'
 alias lshmjk='ls -lA ${HOME} -I Desktop -I Downloads -I Documents -I Pictures -I Music -I Videos -I Public -I Templates -I .cache -I .config -I .local'
 alias yarn='yarn --use-yarnrc "$XDG_CONFIG_HOME/yarn/config"'
-
-# Init gpg...
-
