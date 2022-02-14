@@ -5,11 +5,9 @@ fi
 
 # Configuring Zsh Config...
 . /usr/share/zinit/zinit.zsh
-zi ice lucid wait='0'
 zi snippet /usr/share/oh-my-zsh/lib/git.zsh
 if [[ ${DEVICE_TYPE} == 'Desktop' ]]; then
   zi snippet /usr/share/oh-my-zsh/lib/prompt_info_functions.zsh
-  zi ice lucid atload="git_prompt_info"
   zi snippet /usr/share/oh-my-zsh/themes/gnzh.zsh-theme
 fi
 if [[ ${DEVICE_TYPE} == 'Server' ]]; then
@@ -20,9 +18,9 @@ zi snippet /usr/share/oh-my-zsh/lib/history.zsh
 zi snippet /usr/share/oh-my-zsh/lib/key-bindings.zsh
 zi ice lucid wait='0'
 zi load /usr/share/zsh/plugins/zsh-syntax-highlighting
-zi ice lucid wait='0' atload'_zsh_autosuggest_start'
+zi ice lucid wait='0' atinit'_zsh_autosuggest_start' atload'zicompinit; zicdreplay'
 zi load /usr/share/zsh/plugins/zsh-autosuggestions
-zi ice lucid wait='0' atload="zicompinit; zicdreplay"
+zi ice lucid wait='0'
 zi load /usr/share/oh-my-zsh/plugins/sudo
 
 # Configuring Alias...
