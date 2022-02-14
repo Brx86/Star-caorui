@@ -38,7 +38,7 @@ if [[ ${DEVICE_TYPE} == 'Desktop' ]]; then
                       --bind  ${HOME}/.local ${HOME}/.local'
 fi
 if [[ ${DEVICE_TYPE} == 'Server' ]]; then
-  alias paru='sudo -u http paru'
+  alias paru='sudo -u http /usr/bin/paru'
   alias gpg='gpg --no-autostart'
   gpg -K &> /dev/null
 fi
