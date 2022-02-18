@@ -49,4 +49,5 @@ alias df=duf
 alias du=ncdu
 alias besttrace='besttrace -q 1'
 alias lshmjk='ls -a ${HOME} -I ".cache|.config|.local|Desktop|Documents|Downloads|Music|Pictures|Templates|Videos"'
-alias yarn='yarn --use-yarnrc "$XDG_CONFIG_HOME/yarn/config"'
+bwrap --bind ${HOME}/.config/yarn/config ${HOME}/.yarnrc /usr/bin/yarn
+bwrap --bind ${HOME}/.config/oicq ${HOME}/.oicq /usr/bin/oicq
