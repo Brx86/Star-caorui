@@ -16,12 +16,14 @@ if [[ ${DEVICE_TYPE} == 'Server' ]]; then
 fi
 zi snippet /usr/share/oh-my-zsh/lib/history.zsh
 zi snippet /usr/share/oh-my-zsh/lib/key-bindings.zsh
-zi ice lucid wait='0' atinit'zicompinit; zicdreplay'
-zi load /usr/share/zsh/plugins/zsh-syntax-highlighting
-zi ice lucid wait='0' atload'_zsh_autosuggest_start'
-zi load /usr/share/zsh/plugins/zsh-autosuggestions
-zi ice lucid wait='0'
-zi load /usr/share/oh-my-zsh/plugins/sudo
+zi ice wait lucid
+zi light /usr/share/zsh/plugins/zsh-syntax-highlighting
+zi ice wait lucid atload'_zsh_autosuggest_start'
+zi light /usr/share/zsh/plugins/zsh-autosuggestions
+zi ice wait lucid
+zi light /usr/share/oh-my-zsh/plugins/sudo
+
+autoload compinit; compinit
 
 # Configuring Alias...
 if [[ ${DEVICE_TYPE} == 'Desktop' ]]; then
