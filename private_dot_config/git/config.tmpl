@@ -1,14 +1,15 @@
 [user]
-	signingkey = {{ .signingkey }}
-	name = "{{ .name }}"
-	email = "{{ .email }}"
+  signingkey = {{ .signingkey }}
+  name = "{{ .name }}"
+  email = "{{ .email }}"
 [commit]
-	gpgsign = true
+  gpgsign = true
 [init]
-	defaultBranch = main
+  defaultBranch = main
 {{- if eq .chezmoi.hostname "iNetech-PC" }}
 [credential]
-	helper = /usr/lib/git-core/git-credential-libsecret
+  helper = /usr/lib/git-core/git-credential-libsecret
 {{- end }}
 [color]
   ui = true
+
