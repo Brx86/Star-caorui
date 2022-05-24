@@ -40,6 +40,7 @@ if [[ ${DEVICE_TYPE} == 'Desktop' ]]; then
                       --bind  ${HOME}/.cache ${HOME}/.cache\
                       --bind  ${HOME}/.config ${HOME}/.config\
                       --bind  ${HOME}/.local ${HOME}/.local'
+  alias mntsite='sshfs iNetech-BJ:/srv/http/.local/state/website ~/Documents/VMS/iNetech/BJ'
 fi
 if [[ ${DEVICE_TYPE} == 'Server' ]]; then
   alias paru='sudo -u http /usr/bin/paru'
@@ -55,4 +56,3 @@ alias lshmjk='ls -a ${HOME} -I ".cache|.config|.local|Desktop|Documents|Download
 alias yarn="bwrap --bind ${HOME}/.config/yarn/config ${HOME}/.yarnrc /usr/bin/yarn"
 alias oicq="bwrap --bind ${HOME}/.config/oicq ${HOME}/.oicq /usr/bin/oicq"
 alias clip='curl -F "c=@-" "https://api.inetech.fun/clip?return=preview"'
-alias mntsite='sshfs iNetech-BJ:/srv/http/.local/state/website ~/Documents/VMS/iNetech/BJ'
