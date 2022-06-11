@@ -43,7 +43,7 @@ if [[ ${DEVICE_TYPE} == 'Desktop' ]]; then
   alias mntsite='sshfs iNetech-BJ:/srv/http/.local/state/website ~/Documents/VMS/iNetech/BJ'
 fi
 if [[ ${DEVICE_TYPE} == 'Server' ]]; then
-  alias paru='sudo -u http /usr/bin/paru'
+  alias paru='sudo -u caddy /usr/bin/paru'
   alias gpg='gpg --no-autostart'
   gpg -K &> /dev/null
 fi
