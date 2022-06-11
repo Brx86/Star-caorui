@@ -6,13 +6,13 @@ fi
 # Configuring Zsh Config...
 . /usr/share/zinit/zinit.zsh
 zi snippet /usr/share/oh-my-zsh/lib/git.zsh
-if [[ ${DEVICE_TYPE} == 'Desktop' ]]; then
+if [[ ${EUID} != 0 ]]; then
   zi snippet /usr/share/oh-my-zsh/lib/prompt_info_functions.zsh
   zi snippet /usr/share/oh-my-zsh/themes/gnzh.zsh-theme
   zi ice wait lucid
   zi snippet /usr/share/oh-my-zsh/plugins/gpg-agent/gpg-agent.plugin.zsh
 fi
-if [[ ${DEVICE_TYPE} == 'Server' ]]; then
+if [[ ${EUID} == 0 ]]; then
   zi snippet /usr/share/oh-my-zsh/lib/theme-and-appearance.zsh
   zi snippet /usr/share/oh-my-zsh/themes/kardan.zsh-theme
 fi
