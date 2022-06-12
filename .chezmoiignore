@@ -8,5 +8,4 @@ README.md
 {{- if eq .chezmoi.hostname "iNetech-BJ" "CSC" }}
   .config/environment.d/key.conf
   .config/environment.d/desktop.conf
-  .config/environment.d/input_medhod.conf
 {{- end }}
