@@ -6,15 +6,14 @@ fi
 # Configuring Zsh Config...
 . /usr/share/zinit/zinit.zsh
 zi snippet /usr/share/oh-my-zsh/lib/git.zsh
-if [[ ${EUID} != 0 ]]; then
+if [[ ${EUID} == 0 ]]; then
+  zi snippet /usr/share/oh-my-zsh/lib/theme-and-appearance.zsh
+  zi snippet /usr/share/oh-my-zsh/themes/kardan.zsh-theme
+else
   zi snippet /usr/share/oh-my-zsh/lib/prompt_info_functions.zsh
   zi snippet /usr/share/oh-my-zsh/themes/gnzh.zsh-theme
   zi ice wait lucid
   zi snippet /usr/share/oh-my-zsh/plugins/gpg-agent/gpg-agent.plugin.zsh
-fi
-if [[ ${EUID} == 0 ]]; then
-  zi snippet /usr/share/oh-my-zsh/lib/theme-and-appearance.zsh
-  zi snippet /usr/share/oh-my-zsh/themes/kardan.zsh-theme
 fi
 zi snippet /usr/share/oh-my-zsh/lib/history.zsh
 zi snippet /usr/share/oh-my-zsh/lib/key-bindings.zsh
@@ -40,7 +39,7 @@ if [[ ${DEVICE_TYPE} == 'Desktop' ]]; then
                       --bind  ${HOME}/.cache ${HOME}/.cache\
                       --bind  ${HOME}/.config ${HOME}/.config\
                       --bind  ${HOME}/.local ${HOME}/.local'
-  alias mntsite='sshfs iNetech-BJ:/srv/http/.local/state/website ~/Documents/VMS/iNetech/BJ'
+  alias mntsite='sshfs iNetech-BJ:/srv/website ~/Documents/VMS/iNetech/BJ'
 fi
 if [[ ${DEVICE_TYPE} == 'Server' ]]; then
   alias paru='sudo -u caddy /usr/bin/paru'
