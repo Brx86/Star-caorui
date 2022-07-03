@@ -1,4 +1,4 @@
-Host "iNetech-BJ"
+xHost "iNetech-BJ"
   User root
   HostName bj.inetech.fun
   Port 22
